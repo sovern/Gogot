@@ -1,0 +1,115 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmuxf7cjqxl2d"]
+
+[ext_resource type="FontFile" uid="uid://1bvk8i8tml7f" path="res://dodge_assets/dodge_assets/fonts/Xolonium-Regular.ttf" id="1_fwg6p"]
+[ext_resource type="Script" path="res://scripts/Hud.cs" id="1_j76jg"]
+[ext_resource type="Texture2D" uid="uid://ch8o4djukfx5" path="res://dodge_assets/dodge_assets/art/1322086.png" id="3_4emhk"]
+[ext_resource type="Script" path="res://cenas/LifeCounter.cs" id="3_761il"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_j76jg")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -67.5
+offset_right = 67.5
+offset_bottom = 81.0
+grow_horizontal = 2
+scale = Vector2(1, 1.30648)
+pivot_offset = Vector2(0, -200)
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_fwg6p")
+theme_override_font_sizes/font_size = 64
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -39.0
+offset_right = 0.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_fwg6p")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the Creeps!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.5
+offset_top = -140.0
+offset_right = 88.5
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_fwg6p")
+theme_override_font_sizes/font_size = 64
+text = "Start"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Quit" type="Button" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.00302, 0.981304)
+size_flags_vertical = 8
+text = "QUIT"
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_fwg6p")
+theme_override_font_sizes/font_size = 50
+text = "SCORE"
+
+[node name="LifeCounter" type="Node2D" parent="."]
+script = ExtResource("3_761il")
+
+[node name="H1" type="Sprite2D" parent="LifeCounter"]
+position = Vector2(50, 50)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("3_4emhk")
+
+[node name="H2" type="Sprite2D" parent="LifeCounter"]
+position = Vector2(120, 50)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("3_4emhk")
+
+[node name="H3" type="Sprite2D" parent="LifeCounter"]
+position = Vector2(200, 50)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("3_4emhk")
+
+[connection signal="pressed" from="StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="OnMessageTimerTimeout"]
+[connection signal="pressed" from="Quit" to="." method="OnQuitButtonsPressed"]
