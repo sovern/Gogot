@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwkg5o6wglbau"]
+
+[ext_resource type="Texture2D" uid="uid://b6dfk0dovak75" path="res://dodge_assets/dodge_assets/art/playerGrey_walk1.png" id="1_8qw3d"]
+[ext_resource type="Script" path="res://cenas/PowerUp.cs" id="1_prorc"]
+[ext_resource type="Texture2D" uid="uid://bjhx82u68ukxj" path="res://dodge_assets/dodge_assets/art/playerGrey_walk2.png" id="2_s03ns"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jvbgo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8qw3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_s03ns")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g666g"]
+radius = 12.9251
+height = 28.4611
+
+[node name="PowerUp" type="RigidBody2D" groups=["Mobs"]]
+collision_layer = 2
+gravity_scale = 0.0
+script = ExtResource("1_prorc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.264, 0.25)
+sprite_frames = SubResource("SpriteFrames_jvbgo")
+frame_progress = 0.0189099
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(1.08317, 1.12434)
+shape = SubResource("CapsuleShape2D_g666g")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

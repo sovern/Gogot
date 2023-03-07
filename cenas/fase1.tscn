@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2xvdilc2eojl"]
+
+[ext_resource type="Script" path="res://scripts/fase1.cs" id="1_s5obm"]
+[ext_resource type="PackedScene" uid="uid://borp0m5rkyfha" path="res://cenas/Mob.tscn" id="2_ha2oi"]
+[ext_resource type="PackedScene" uid="uid://bmuxf7cjqxl2d" path="res://cenas/Hud.tscn" id="3_5uceb"]
+[ext_resource type="PackedScene" uid="uid://bwkg5o6wglbau" path="res://cenas/PowerUp.tscn" id="3_l40ky"]
+[ext_resource type="PackedScene" uid="uid://cr1idltwikbim" path="res://cenas/player.tscn" id="3_x3rxp"]
+[ext_resource type="Texture2D" uid="uid://duq2qsa5e2l4n" path="res://4Z_2101.w020.n001.999A.p30.999.jpg" id="4_m3a8t"]
+
+[sub_resource type="Curve2D" id="Curve2D_ohjs7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1939.03, 0, 0, 0, 0, 0, 1941.04, 1083, 0, 0, 0, 0, -2.0104, 1076, 0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="Fase1" type="Node"]
+script = ExtResource("1_s5obm")
+MobScene = ExtResource("2_ha2oi")
+PowerUpScene = ExtResource("3_l40ky")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -9.0
+offset_top = 5.0
+offset_right = 1919.0
+offset_bottom = 1077.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("4_m3a8t")
+expand_mode = 2
+
+[node name="HUD" parent="." instance=ExtResource("3_5uceb")]
+
+[node name="Player" parent="." instance=ExtResource("3_x3rxp")]
+
+[node name="MobPath" type="Path2D" parent="."]
+position = Vector2(-4, 2)
+scale = Vector2(0.994829, 1)
+curve = SubResource("Curve2D_ohjs7")
+
+[node name="MobSpawLocation" type="PathFollow2D" parent="MobPath"]
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.097
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(957, 697)
+scale = Vector2(-0.153884, 207.088)
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(0.992169, 1)
+
+[connection signal="Quit" from="HUD" to="." method="OnQuit"]
+[connection signal="StartGame" from="HUD" to="." method="NewGame"]
+[connection signal="Hit" from="Player" to="." method="GameOver"]
+[connection signal="LifeAdded" from="Player" to="." method="onLifeAdded"]
+[connection signal="LifeRemoved" from="Player" to="." method="onLifeRemoved"]
+[connection signal="Point" from="Player" to="." method="OnPointAdded"]
+[connection signal="timeout" from="MobTimer" to="." method="OnMobTimerTimeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="OnScoreTimerTimeout"]
+[connection signal="timeout" from="StartTimer" to="." method="OnStartTimerTimeout"]
